@@ -1,4 +1,4 @@
-import { ref, set } from "firebase/database"
+import { push, ref, set } from "firebase/database"
 import { useRef } from "react"
 import { useSnapshot } from "../hooks/useSnapshot"
 import { db } from "./firebase"
@@ -7,7 +7,7 @@ export interface Roster {
   createdAt: number
   id: string
   name: string
-  players: Record<string, boolean>
+  players?: Record<string, boolean>
   status: string
 }
 
@@ -29,6 +29,17 @@ export function useRoster(id: string) {
   const roster = snapshot ? { ...(snapshot.val() as Roster), id } : undefined
 
   return [roster, { loading: !snapshot }] as const
+}
+
+export function addRoster(name: string) {
+  const rostersRef = ref(db, "rosters")
+  const newRosterRef = push(rostersRef)
+
+  return set(newRosterRef, {
+    createdAt: new Date().toISOString(),
+    name,
+    status: "active",
+  })
 }
 
 export async function setPlayerActive(

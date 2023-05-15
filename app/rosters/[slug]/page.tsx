@@ -38,7 +38,7 @@ export default function RostersPage({ params }: RostersPageProps) {
 
             <div className="mt-4 divide-y divide-gray-200 border-b border-t border-gray-200">
               {(players ?? []).map((player, personIdx) => {
-                const isSelected = roster.players[player.id]
+                const isSelected = !!roster.players?.[player.id]
                 const handleChange = (isSelected: boolean) =>
                   setPlayerActive(roster.id, player.id, isSelected)
 

@@ -12,6 +12,7 @@ export interface AddModalProps {
 
 export function AddModal({ icon, onCreate, title }: AddModalProps) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
     const formData = new FormData(e.currentTarget)
     onCreate(formData.get("name") as string)
   }
