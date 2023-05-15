@@ -1,9 +1,14 @@
-import { DocumentTextIcon, UsersIcon } from "@heroicons/react/24/outline"
+import {
+  DocumentTextIcon,
+  RectangleGroupIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline"
 import { NavSidebarItem } from "./NavSidebarItem"
 
-const navigation = [
+export const navItems = [
   { href: "/", icon: DocumentTextIcon, name: "Lineup" },
-  { href: "/team", icon: UsersIcon, name: "Team" },
+  { href: "/rosters", icon: RectangleGroupIcon, name: "Rosters" },
+  { href: "/players", icon: UserGroupIcon, name: "Players" },
 ]
 
 export function NavSidebar() {
@@ -21,7 +26,7 @@ export function NavSidebar() {
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
             <ul role="list" className="-mx-2 space-y-1">
-              {navigation.map((item) => (
+              {navItems.map((item) => (
                 <NavSidebarItem key={item.name} item={item}></NavSidebarItem>
               ))}
             </ul>

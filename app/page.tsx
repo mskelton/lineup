@@ -6,7 +6,7 @@ import { roster } from "./data/roster"
 export default function LineupPage() {
   return (
     <main className="mb-20">
-      <ResponsiveTitle>Lineup</ResponsiveTitle>
+      <ResponsiveTitle className="mb-8">Lineup</ResponsiveTitle>
       <Lineup roster={roster} />
       <Actions />
     </main>

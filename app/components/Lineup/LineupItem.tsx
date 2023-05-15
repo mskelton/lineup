@@ -6,6 +6,7 @@ import clsx from "clsx"
 import { FieldPosition } from "../../data/positions"
 
 export interface TeamPlayer {
+  id: string
   name: string
   positions: FieldPosition[]
 }

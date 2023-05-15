@@ -3,5 +3,13 @@
     "@mskelton",
     "@mskelton/eslint-config/typescript",
     "next/core-web-vitals"
+  ],
+  "overrides": [
+    {
+      "files": ["*.styles.ts"],
+      "rules": {
+        "sort/object-properties": "off"
+      }
+    }
   ]
 }

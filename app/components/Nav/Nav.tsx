@@ -5,14 +5,16 @@ import {
   Bars3Icon,
   ListBulletIcon,
   Squares2X2Icon,
-  TableCellsIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline"
+import { usePathname } from "next/navigation"
 import { Fragment, useState } from "react"
-import { NavSidebar } from "./NavSidebar"
+import { navItems, NavSidebar } from "./NavSidebar"
 
 export default function Nav() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const pathname = usePathname()
+  const activeNavItem = navItems.find((item) => item.href === pathname)
 
   return (
     <>
@@ -89,8 +91,9 @@ export default function Nav() {
           <span className="sr-only">Open sidebar</span>
           <Bars3Icon className="h-6 w-6" aria-hidden="true" />
         </button>
+
         <div className="flex-1 text-sm font-semibold leading-6 text-white">
-          Lineup
+          {activeNavItem?.name}
         </div>
 
         {/* TODO */}

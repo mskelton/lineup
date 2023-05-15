@@ -1,4 +1,5 @@
 import clsx from "clsx"
+import { usePathname } from "next/navigation"
 
 export interface NavSidebarItem {
   href: string
@@ -11,13 +12,14 @@ export interface NavSidebarItemProps {
 }
 
 export function NavSidebarItem({ item }: NavSidebarItemProps) {
-  // TODO
-  const current = false
+  const pathname = usePathname()
+  const current = pathname === item.href
 
   return (
     <li>
       <a
         href={item.href}
+        aria-current={current ? "page" : undefined}
         className={clsx(
           current
             ? "bg-indigo-700 text-white"
