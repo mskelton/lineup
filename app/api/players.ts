@@ -1,14 +1,12 @@
 import { push, ref, set } from "firebase/database"
 import { useRef } from "react"
-import { useSnapshot, useSnapshotVal } from "../hooks/useSnapshot"
+import { useSnapshotVal } from "../hooks/useSnapshot"
 import { db } from "./firebase"
 
 export interface Player {
   createdAt: number
   id: string
   name: string
-  players: string[]
-  status: string
 }
 
 export function usePlayers() {
@@ -23,7 +21,10 @@ export function usePlayers() {
 
 export function usePlayer(id: string) {
   const playerRef = useRef(ref(db, `players/${id}`))
-  return useSnapshot(playerRef.current)
+  const val = useSnapshotVal<Player>(playerRef.current)
+  const player = val ? { ...val, id } : undefined
+
+  return [player, { loading: !val }] as const
 }
 
 export function addPlayer(name: string) {

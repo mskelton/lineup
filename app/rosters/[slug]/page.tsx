@@ -7,13 +7,13 @@ import { NotFound } from "../../components/common/NotFound"
 import Switch from "../../components/common/Switch"
 import Title from "../../components/common/Title"
 
-export interface RostersPageProps {
+export interface RosterPageProps {
   params: {
     slug: string
   }
 }
 
-export default function RostersPage({ params }: RostersPageProps) {
+export default function RosterPage({ params }: RosterPageProps) {
   const [roster, { loading: loadingRoster }] = useRoster(params.slug)
   const [players, { loading: loadingPlayers }] = usePlayers()
   const loading = loadingRoster || loadingPlayers

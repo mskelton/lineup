@@ -1,6 +1,6 @@
 import { push, ref, set } from "firebase/database"
 import { useRef } from "react"
-import { useSnapshot } from "../hooks/useSnapshot"
+import { useSnapshotVal } from "../hooks/useSnapshot"
 import { db } from "./firebase"
 
 export interface Roster {
@@ -13,22 +13,20 @@ export interface Roster {
 
 export function useRosters() {
   const rostersRef = useRef(ref(db, "rosters"))
-  const snapshot = useSnapshot(rostersRef.current)
-  const rosters = snapshot
-    ? Object.entries(snapshot.val() as Record<string, Roster>).map(
-        ([id, roster]) => ({ ...roster, id })
-      )
+  const val = useSnapshotVal<Record<string, Roster>>(rostersRef.current)
+  const rosters = val
+    ? Object.entries(val).map(([id, roster]) => ({ ...roster, id }))
     : undefined
 
-  return [rosters, { loading: !snapshot }] as const
+  return [rosters, { loading: !val }] as const
 }
 
 export function useRoster(id: string) {
   const rosterRef = useRef(ref(db, `rosters/${id}`))
-  const snapshot = useSnapshot(rosterRef.current)
-  const roster = snapshot ? { ...(snapshot.val() as Roster), id } : undefined
+  const val = useSnapshotVal<Roster>(rosterRef.current)
+  const roster = val ? { ...val, id } : undefined
 
-  return [roster, { loading: !snapshot }] as const
+  return [roster, { loading: !val }] as const
 }
 
 export function addRoster(name: string) {
