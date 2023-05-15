@@ -3,7 +3,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline"
 export interface StackedListItemProps {
   children?: React.ReactNode
   href: string
-  subtitle: string
+  subtitle?: string
   title: string
 }
 

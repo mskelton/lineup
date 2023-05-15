@@ -10,3 +10,8 @@ export function useSnapshot(ref: DatabaseReference) {
 
   return state
 }
+
+export function useSnapshotVal<T>(ref: DatabaseReference): T | null {
+  const snapshot = useSnapshot(ref)
+  return snapshot?.val() ?? null
+}

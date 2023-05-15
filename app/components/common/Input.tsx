@@ -1,18 +1,27 @@
+import clsx from "clsx"
 import { useId } from "react"
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string
+  labelVisibility?: "hidden" | "visible"
 }
 
-export default function Input({ label, ...props }: InputProps) {
+export default function Input({
+  label,
+  labelVisibility = "visible",
+  ...props
+}: InputProps) {
   const id = useId()
 
   return (
     <div>
       <label
         htmlFor={id}
-        className="block text-sm font-medium leading-6 text-gray-900"
+        className={clsx(
+          "block text-sm font-medium leading-6 text-gray-900",
+          labelVisibility === "hidden" && "sr-only"
+        )}
       >
         {label}
       </label>

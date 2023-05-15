@@ -1,7 +1,6 @@
 "use client"
 
 import { UserGroupIcon } from "@heroicons/react/24/outline"
-import clsx from "clsx"
 import { usePlayers } from "../api/players"
 import { Button } from "../components/common/Button"
 import { EmptyState } from "../components/common/EmptyState"
@@ -9,50 +8,34 @@ import { Loader } from "../components/common/Loader"
 import Title from "../components/common/Title"
 import StackedList from "../components/StackedList/StackedList"
 import StackedListItem from "../components/StackedList/StackedListItem"
-import { titleCase } from "../utils/format"
-
-const statuses = {
-  active: "text-green-700 bg-green-50 ring-green-600/20",
-  archived: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
-}
+import { AddPlayerModal } from "./components/AddPlayerModal"
 
 export default function PlayersPage() {
-  const [rosters, { loading }] = usePlayers()
+  const [players, { loading }] = usePlayers()
+  console.log(players)
 
   return (
     <main className="mb-20">
       <div className="mb-8 flex items-center justify-between">
         <Title>Players</Title>
 
-        {!loading && rosters.length ? (
-          <Button size="lg">Create Roster</Button>
-        ) : null}
+        {!loading && players?.length ? <AddPlayerModal /> : null}
       </div>
 
       {loading ? (
         <Loader className="h-44 w-full" />
-      ) : rosters.length ? (
+      ) : players?.length ? (
         <StackedList>
-          {rosters.map((roster) => (
+          {players?.map((player) => (
             <StackedListItem
-              title={roster.name}
-              href={`/rosters/${roster.id}`}
-              subtitle={`${roster.players.length} players`}
-              key={roster.id}
-            >
-              <p
-                className={clsx(
-                  "mt-1 hidden whitespace-nowrap rounded-md px-2 py-1 text-sm font-medium ring-1 ring-inset sm:block",
-                  statuses[roster.status as keyof typeof statuses]
-                )}
-              >
-                {titleCase(roster.status)}
-              </p>
-            </StackedListItem>
+              href={`/players/${player.id}`}
+              key={player.id}
+              title={player.name}
+            />
           ))}
         </StackedList>
       ) : (
-        <EmptyState icon={<UserGroupIcon />}>Create a new roster</EmptyState>
+        <EmptyState icon={<UserGroupIcon />}>Create a new player</EmptyState>
       )}
     </main>
   )

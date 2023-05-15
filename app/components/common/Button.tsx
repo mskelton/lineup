@@ -12,9 +12,19 @@ export interface ButtonProps
   className?: string
 }
 
-export function Button({ children, className, color, size }: ButtonProps) {
+export function Button({
+  children,
+  className,
+  color,
+  size,
+  ...props
+}: ButtonProps) {
   return (
-    <BaseButton type="button" className={button({ className, color, size })}>
+    <BaseButton
+      type="button"
+      className={button({ className, color, size })}
+      {...props}
+    >
       {children}
     </BaseButton>
   )
