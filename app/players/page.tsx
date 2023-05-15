@@ -13,7 +13,7 @@ export default function PlayersPage() {
   const [players, { loading }] = usePlayers()
 
   return (
-    <main className="mb-20">
+    <div className="mb-20">
       <div className="mb-8 flex items-center justify-between">
         <Title>Players</Title>
 
@@ -35,6 +35,6 @@ export default function PlayersPage() {
       ) : (
         <EmptyState icon={<UserGroupIcon />}>Create a new player</EmptyState>
       )}
-    </main>
+    </div>
   )
 }

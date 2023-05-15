@@ -15,7 +15,7 @@ export default function PlayerPage({ params }: PlayerPageProps) {
   const [player, { loading }] = usePlayer(params.slug)
 
   return (
-    <main className="mb-20">
+    <div className="mb-20">
       {loading ? (
         <Loader className="h-44 w-full" />
       ) : !player ? (
@@ -28,6 +28,6 @@ export default function PlayerPage({ params }: PlayerPageProps) {
           <Title className="mb-8">{player.name}</Title>
         </div>
       )}
-    </main>
+    </div>
   )
 }

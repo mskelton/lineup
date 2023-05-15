@@ -1,19 +1,19 @@
-import { useEffect, useMemo, useState } from "react"
-import { fieldPositions } from "../../data/positions"
-import { TeamPlayer } from "./LineupItem"
+import { useEffect, useState } from "react"
+import { Player } from "../../api/players"
+import { fieldPositions } from "../../utils/positions"
 
 export type Lineup = Record<string, string | undefined>
 
 /**
  * Convert an index-based lineup to a more useful object-based lineup.
  */
-function convertToLineup(lineup: number[], roster: TeamPlayer[]) {
+function convertToLineup(lineup: number[], roster: Player[]) {
   return roster.reduce((acc, player, i) => {
     return { ...acc, [player.name]: fieldPositions[lineup[i]] }
   }, {} as Lineup)
 }
 
-const cache = new WeakMap<TeamPlayer[], Lineup[]>()
+const cache = new WeakMap<Player[], Lineup[]>()
 
 /**
  * Score the lineup based on the players and their positions. The goal is the
@@ -72,7 +72,7 @@ function nextLineup(lineup: number[], playersByPosition: number[][]) {
   return false
 }
 
-function generateIdealLineups(roster: TeamPlayer[]) {
+function generateIdealLineups(roster: Player[]) {
   if (cache.has(roster)) {
     return cache.get(roster)!
   }
@@ -83,7 +83,7 @@ function generateIdealLineups(roster: TeamPlayer[]) {
   // those positions.
   const playersByPosition = fieldPositions.map((position) => {
     return roster.reduce((acc, player, i) => {
-      return player.positions.includes(position) ? [...acc, i] : acc
+      return player.positions?.includes(position) ? [...acc, i] : acc
     }, [] as number[])
   })
 
@@ -91,7 +91,7 @@ function generateIdealLineups(roster: TeamPlayer[]) {
   // preferences. This is used for scoring the lineups.
   const playerPreferences = roster.map((player) => {
     return fieldPositions.map((position) => {
-      const index = player.positions.indexOf(position)
+      const index = player.positions?.indexOf(position) ?? -1
       return index === -1 ? Infinity : index
     })
   })
@@ -121,17 +121,14 @@ function generateIdealLineups(roster: TeamPlayer[]) {
   return lineups
 }
 
-export function useLineups(roster: TeamPlayer[], activePlayers: string[]) {
+export function useLineups(roster: Player[]) {
   const [lineups, setLineups] = useState<Lineup[]>([{}])
-  const activeRoster = useMemo(() => {
-    return roster.filter((player) => activePlayers.includes(player.name))
-  }, [roster, activePlayers])
 
   useEffect(() => {
     setTimeout(() => {
-      setLineups(generateIdealLineups(activeRoster))
+      setLineups(generateIdealLineups(roster))
     })
-  }, [activeRoster])
+  }, [roster])
 
   return lineups
 }

@@ -19,7 +19,7 @@ export default function RosterPage({ params }: RosterPageProps) {
   const loading = loadingRoster || loadingPlayers
 
   return (
-    <main className="mb-20">
+    <div className="mb-20">
       {loading ? (
         <Loader className="h-44 w-full" />
       ) : !roster ? (
@@ -67,6 +67,6 @@ export default function RosterPage({ params }: RosterPageProps) {
           </fieldset>
         </div>
       )}
-    </main>
+    </div>
   )
 }

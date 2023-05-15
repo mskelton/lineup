@@ -23,7 +23,7 @@ export default function RostersPage() {
   const [rosters, { loading }] = useRosters()
 
   return (
-    <main className="mb-20">
+    <div className="mb-20">
       <div className="mb-8 flex items-center justify-between">
         <Title>Rosters</Title>
 
@@ -59,6 +59,6 @@ export default function RostersPage() {
       ) : (
         <EmptyState icon={<UserGroupIcon />}>Create a new roster</EmptyState>
       )}
-    </main>
+    </div>
   )
 }

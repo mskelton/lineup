@@ -1,20 +1,24 @@
 import { push, ref, set } from "firebase/database"
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 import { useSnapshotVal } from "../hooks/useSnapshot"
+import { FieldPosition } from "../utils/positions"
 import { db } from "./firebase"
 
 export interface Player {
   createdAt: number
   id: string
   name: string
+  positions?: FieldPosition[]
 }
 
 export function usePlayers() {
   const playersRef = useRef(ref(db, "players"))
   const val = useSnapshotVal<Record<string, Player>>(playersRef.current)
-  const players = val
-    ? Object.entries(val).map(([id, player]) => ({ ...player, id }))
-    : undefined
+  const players = useMemo(() => {
+    return val
+      ? Object.entries(val).map(([id, player]) => ({ ...player, id }))
+      : undefined
+  }, [val])
 
   return [players, { loading: !val }] as const
 }

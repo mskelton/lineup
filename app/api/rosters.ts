@@ -1,5 +1,5 @@
 import { push, ref, set } from "firebase/database"
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 import { useSnapshotVal } from "../hooks/useSnapshot"
 import { db } from "./firebase"
 
@@ -24,7 +24,7 @@ export function useRosters() {
 export function useRoster(id: string) {
   const rosterRef = useRef(ref(db, `rosters/${id}`))
   const val = useSnapshotVal<Roster>(rosterRef.current)
-  const roster = val ? { ...val, id } : undefined
+  const roster = useMemo(() => (val ? { ...val, id } : undefined), [id, val])
 
   return [roster, { loading: !val }] as const
 }

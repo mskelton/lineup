@@ -1,5 +1,5 @@
 import { DatabaseReference, DataSnapshot, onValue } from "firebase/database"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 export function useSnapshot(ref: DatabaseReference) {
   const [state, setState] = useState<DataSnapshot | null>(null)
@@ -13,5 +13,5 @@ export function useSnapshot(ref: DatabaseReference) {
 
 export function useSnapshotVal<T>(ref: DatabaseReference): T | null {
   const snapshot = useSnapshot(ref)
-  return snapshot?.val() ?? null
+  return useMemo(() => snapshot?.val() ?? null, [snapshot])
 }

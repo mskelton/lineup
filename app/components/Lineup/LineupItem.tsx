@@ -3,18 +3,12 @@
 import { Switch } from "@headlessui/react"
 import { CheckCircleIcon } from "@heroicons/react/24/outline"
 import clsx from "clsx"
-import { FieldPosition } from "../../data/positions"
-
-export interface TeamPlayer {
-  id: string
-  name: string
-  positions: FieldPosition[]
-}
+import { Player } from "../../api/players"
 
 export interface LineupItemProps {
   active: boolean
   onActiveChange(value: boolean): void
-  player: TeamPlayer
+  player: Player
   position: string | undefined
 }
 
