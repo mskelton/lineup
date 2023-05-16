@@ -1,19 +1,20 @@
-import { push, ref, set } from "firebase/database"
+import { child, ref, remove, serverTimestamp, set } from "firebase/database"
 import { useMemo, useRef } from "react"
 import { useSnapshotVal } from "../hooks/useSnapshot"
-import { FieldPosition } from "../utils/positions"
+import { generateId } from "../utils/id"
 import { db } from "./firebase"
 
 export interface Player {
   createdAt: number
   id: string
   name: string
-  positions?: FieldPosition[]
+  positions?: string[]
 }
 
+const playersRef = ref(db, "players")
+
 export function usePlayers() {
-  const playersRef = useRef(ref(db, "players"))
-  const val = useSnapshotVal<Record<string, Player>>(playersRef.current)
+  const val = useSnapshotVal<Record<string, Player>>(playersRef)
   const players = useMemo(() => {
     return val
       ? Object.entries(val).map(([id, player]) => ({ ...player, id }))
@@ -24,19 +25,25 @@ export function usePlayers() {
 }
 
 export function usePlayer(id: string) {
-  const playerRef = useRef(ref(db, `players/${id}`))
+  const playerRef = useRef(child(playersRef, id))
   const val = useSnapshotVal<Player>(playerRef.current)
   const player = val ? { ...val, id } : undefined
 
   return [player, { loading: !val }] as const
 }
 
-export function addPlayer(name: string) {
-  const playersRef = ref(db, "players")
-  const newPlayerRef = push(playersRef)
+export async function addPlayer(name: string) {
+  const id = generateId()
+  const newPlayerRef = child(playersRef, id)
 
-  return set(newPlayerRef, {
-    createdAt: new Date().toISOString(),
+  await set(newPlayerRef, {
+    createdAt: serverTimestamp(),
     name,
   })
+
+  return id
+}
+
+export async function deletePlayer(id: string) {
+  await remove(child(playersRef, id))
 }

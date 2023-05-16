@@ -1,4 +1,4 @@
-import { cloneElement } from "react"
+import { cloneElement, useState } from "react"
 import { DialogTrigger } from "react-aria-components"
 import { Button } from "./common/Button"
 import Input from "./common/Input"
@@ -11,17 +11,23 @@ export interface AddModalProps {
 }
 
 export function AddModal({ icon, onCreate, title }: AddModalProps) {
+  const [loading, setLoading] = useState(false)
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    setLoading(true)
+
     const formData = new FormData(e.currentTarget)
-    onCreate(formData.get("name") as string)
+    const name = formData.get("name") as string
+
+    Promise.resolve(onCreate(name)).finally(() => setLoading(false))
   }
 
   return (
     <DialogTrigger>
       <Button size="lg">{title}</Button>
 
-      <Modal>
+      <Modal size="sm">
         {({ close }) => (
           <form
             onSubmit={(e) => {
@@ -54,16 +60,19 @@ export function AddModal({ icon, onCreate, title }: AddModalProps) {
               </div>
             </div>
 
-            <div className="mt-5 sm:mt-8 sm:flex sm:flex-row-reverse">
+            <div className="mt-5 flex flex-col gap-2 sm:mt-8 sm:flex-row-reverse">
               <Button
-                className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto"
+                variant="primary"
+                className="w-full sm:ml-3 sm:w-auto"
+                isLoading={loading}
                 type="submit"
               >
                 Create
               </Button>
 
               <Button
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                className="w-full sm:w-auto"
+                variant="secondary"
                 onPress={close}
               >
                 Cancel

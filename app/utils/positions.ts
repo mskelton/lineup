@@ -9,7 +9,7 @@ export const fieldPositions = [
   "second",
   "shortstop",
   "third",
-] as const
+]
 
 export const fieldPositionNames: Record<string, string | undefined> = {
   catcher: "Catcher",
@@ -23,5 +23,3 @@ export const fieldPositionNames: Record<string, string | undefined> = {
   shortstop: "Shortstop",
   third: "Third",
 }
-
-export type FieldPosition = (typeof fieldPositions)[number]

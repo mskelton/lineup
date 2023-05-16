@@ -10,12 +10,15 @@ export interface LinkProps extends BaseLinkProps, VariantProps<typeof button> {
 export function Link({
   children,
   className,
-  color,
   size,
+  variant: color,
   ...props
 }: LinkProps) {
   return (
-    <BaseLink className={button({ className, color, size })} {...props}>
+    <BaseLink
+      className={button({ className, size, variant: color })}
+      {...props}
+    >
       {children}
     </BaseLink>
   )
