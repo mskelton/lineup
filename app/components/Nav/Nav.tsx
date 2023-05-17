@@ -26,10 +26,10 @@ export default function Nav() {
         >
           <Transition.Child
             as={Fragment}
-            enter="transition-opacity ease-linear duration-300"
+            enter="transition-opacity ease-linear duration-200"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-300"
+            leave="transition-opacity ease-linear duration-200"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
@@ -39,20 +39,20 @@ export default function Nav() {
           <div className="fixed inset-0 flex">
             <Transition.Child
               as={Fragment}
-              enter="transition ease-in-out duration-300 transform"
+              enter="transition ease-in-out duration-200 transform"
               enterFrom="-translate-x-full"
               enterTo="translate-x-0"
-              leave="transition ease-in-out duration-300 transform"
+              leave="transition ease-in-out duration-200 transform"
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
               <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
                 <Transition.Child
                   as={Fragment}
-                  enter="ease-in-out duration-300"
+                  enter="ease-in-out duration-200"
                   enterFrom="opacity-0"
                   enterTo="opacity-100"
-                  leave="ease-in-out duration-300"
+                  leave="ease-in-out duration-200"
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >

@@ -20,6 +20,8 @@ export const button = tv({
       secondary:
         "bg-white text-gray-900 border-gray-300 ra-focus:ring-indigo-600 hover:bg-gray-50",
       danger: "bg-red-600 ra-focus:ring-red-600 hover:bg-red-500",
+      ghost:
+        "ra-focus:ring-indigo-600 hover:bg-gray-100 active:bg-gray-200 rounded-md",
       link: "text-indigo-600 hover:text-indigo-500 hover:underline p-0",
     },
     isDisabled: {
