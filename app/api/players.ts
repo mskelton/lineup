@@ -11,16 +11,11 @@ import { useSnapshotVal } from "../hooks/useSnapshot"
 import { generateId } from "../utils/id"
 import { db } from "./firebase"
 
-export interface PlayerPosition {
-  order: number
-  position: string
-}
-
 export interface Player {
   createdAt: number
   id: string
   name: string
-  positions?: Record<string, PlayerPosition>
+  positions?: Record<string, number>
 }
 
 const playersRef = ref(db, "players")
@@ -62,16 +57,14 @@ export async function deletePlayer(id: string) {
 
 export async function addPlayerPosition(
   playerId: string,
-  position: PlayerPosition
+  position: string,
+  order: number
 ) {
-  const positionRef = push(child(playersRef, `${playerId}/positions`))
-  await set(positionRef, position)
+  const positionRef = child(playersRef, `${playerId}/positions/${position}`)
+  await set(positionRef, order)
 }
 
-export async function removePlayerPosition(
-  playerId: string,
-  positionId: string
-) {
-  const positionRef = child(playersRef, `${playerId}/positions/${positionId}`)
+export async function removePlayerPosition(playerId: string, position: string) {
+  const positionRef = child(playersRef, `${playerId}/positions/${position}`)
   await remove(positionRef)
 }

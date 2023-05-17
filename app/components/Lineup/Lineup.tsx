@@ -33,7 +33,7 @@ export default function Lineup({ rosterId = "123" }: LineupProps) {
             <LineupItem
               key={player.name}
               player={player}
-              active={false}
+              active
               position={fieldPositionNames[lineup[player.name] ?? ""]}
               onActiveChange={(active) =>
                 setActivePlayers((players) => {

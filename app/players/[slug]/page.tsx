@@ -22,10 +22,10 @@ export interface PlayerPageProps {
 export default function PlayerPage({ params }: PlayerPageProps) {
   const [player, { loading }] = usePlayer(params.slug)
   const selectedItems = Object.entries(player?.positions ?? {}).map(
-    ([id, position]) => ({
+    ([id, order]) => ({
       id,
-      name: fieldPositionNames[position.position],
-      ...position,
+      name: fieldPositionNames[id],
+      order,
     })
   )
 
@@ -43,14 +43,18 @@ export default function PlayerPage({ params }: PlayerPageProps) {
           <Title className="mb-8">{player.name}</Title>
           {selectedItems.length ? (
             <>
-              <h2 className="mb-4 text-lg font-bold">Positions</h2>
-              <ul className="mb-8 space-y-2">
+              <h2 className="text-lg font-bold">Positions</h2>
+              <p className="mb-4 text-sm text-gray-700">
+                Drag to reorder your preferred positions
+              </p>
+              <ul className="mb-8 space-y-3">
                 {selectedItems.map((item) => (
                   <li
                     className="flex w-full items-center justify-between gap-2 rounded-lg border-2 border-indigo-600 px-4 py-3 font-medium"
                     key={item.id}
                   >
-                    {item.name}
+                    <span>{item.name}</span>
+
                     <Button
                       variant="ghost"
                       size="md"
@@ -72,7 +76,7 @@ export default function PlayerPage({ params }: PlayerPageProps) {
             {fieldPositions
               .filter(
                 (position) =>
-                  !selectedItems?.some((item) => item.position === position)
+                  !selectedItems?.some((item) => item.id === position)
               )
               .map((position) => (
                 <li key={position}>
@@ -81,10 +85,11 @@ export default function PlayerPage({ params }: PlayerPageProps) {
                     aria-label={`Add ${fieldPositionNames[position]}`}
                     disabled={selectedItems.length >= 4}
                     onClick={() => {
-                      addPlayerPosition(player.id, {
-                        order: selectedItems.length + 1,
+                      addPlayerPosition(
+                        player.id,
                         position,
-                      })
+                        selectedItems.length + 1
+                      )
                     }}
                   >
                     {fieldPositionNames[position]}

@@ -8,8 +8,8 @@ export type Lineup = Record<string, string | undefined>
  * Convert an index-based lineup to a more useful object-based lineup.
  */
 function convertToLineup(lineup: number[], roster: Player[]) {
-  return roster.reduce((acc, player, i) => {
-    return { ...acc, [player.name]: fieldPositions[lineup[i]] }
+  return lineup.reduce((acc, player, position) => {
+    return { ...acc, [roster[player].name]: fieldPositions[position] }
   }, {} as Lineup)
 }
 
@@ -32,7 +32,11 @@ function getScore(lineup: number[], playerPreferences: number[][]) {
   }
 
   return lineup.reduce((acc, playerIndex, i) => {
-    return acc + playerPreferences[playerIndex][i]
+    // We square the position preference to make less desired positions more
+    // costly to the overall team score. This helps ensure a more balanced
+    // spread of preferences, rather than a few players having very undesirable
+    // positions.
+    return acc + playerPreferences[playerIndex][i] ** 2
   }, 0)
 }
 
@@ -83,15 +87,20 @@ function generateIdealLineups(roster: Player[]) {
   // those positions.
   const playersByPosition = fieldPositions.map((position) => {
     return roster.reduce((acc, player, i) => {
-      return player.positions?.includes(position) ? [...acc, i] : acc
+      const playerPositions = Object.keys(player.positions ?? {})
+      return playerPositions.some((p) => p === position) ? [...acc, i] : acc
     }, [] as number[])
   })
 
   // Next, we need to construct a inverse list of players and their position
   // preferences. This is used for scoring the lineups.
   const playerPreferences = roster.map((player) => {
+    const playerPositions = Object.entries(player.positions ?? {})
+      .sort((a, b) => a[1] - b[1])
+      .map(([key]) => key)
+
     return fieldPositions.map((position) => {
-      const index = player.positions?.indexOf(position) ?? -1
+      const index = playerPositions.indexOf(position) ?? -1
       return index === -1 ? Infinity : index
     })
   })
@@ -125,6 +134,8 @@ export function useLineups(roster: Player[]) {
   const [lineups, setLineups] = useState<Lineup[]>([{}])
 
   useEffect(() => {
+    if (!roster.length) return
+
     setTimeout(() => {
       setLineups(generateIdealLineups(roster))
     })
