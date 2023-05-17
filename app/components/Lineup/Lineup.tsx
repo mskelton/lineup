@@ -1,11 +1,11 @@
 "use client"
 
+import { SparklesIcon } from "@heroicons/react/24/outline"
 import { useMemo } from "react"
 import { usePlayers } from "../../api/players"
 import { useRoster } from "../../api/rosters"
 import { fieldPositionNames } from "../../utils/positions"
 import { fieldPositions } from "../../utils/positions"
-import Badge from "../common/Badge"
 import { Skeleton } from "../common/Skeleton"
 import LineupItem from "./LineupItem"
 import { useLineups } from "./useLineups"
@@ -46,7 +46,11 @@ export default function Lineup({ rosterId = "123" }: LineupProps) {
             color="green"
             className="w-full rounded-md bg-green-50 px-4 py-3 text-green-700 ring-1 ring-inset ring-green-600/20"
           >
-            <p className="mb-1 text-base font-semibold">Great Lineup!</p>
+            <p className="mb-1 flex items-center justify-between text-base font-semibold">
+              <span>Great Lineup!</span>
+              <SparklesIcon className="h-6 w-6" />
+            </p>
+
             <p className="text-xs font-medium">
               With a total score of 4, each player received either their 1
               <sup>st</sup> or 2<sup>nd</sup> choice.
