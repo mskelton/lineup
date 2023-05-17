@@ -7,8 +7,8 @@ import {
   useRoster,
 } from "../../api/rosters"
 import { Button } from "../../components/common/Button"
-import { Loader } from "../../components/common/Loader"
 import { NotFound } from "../../components/common/NotFound"
+import { Skeleton } from "../../components/common/Skeleton"
 import Switch from "../../components/common/Switch"
 import Title from "../../components/common/Title"
 import { DeleteRosterModal } from "./components/DeleteRosterModal"
@@ -28,7 +28,7 @@ export default function RosterPage({ params }: RosterPageProps) {
   return (
     <div className="mb-20">
       {loading ? (
-        <Loader className="h-44 w-full" />
+        <Skeleton className="h-44" />
       ) : !roster ? (
         <NotFound
           title="Roster not found"

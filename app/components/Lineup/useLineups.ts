@@ -2,15 +2,18 @@ import { useEffect, useState } from "react"
 import { Player } from "../../api/players"
 import { fieldPositions } from "../../utils/positions"
 
-export type Lineup = Record<string, string | undefined>
+export interface Lineup {
+  players: Record<string, string | undefined>
+  score: number
+}
 
 /**
  * Convert an index-based lineup to a more useful object-based lineup.
  */
-function convertToLineup(lineup: number[], roster: Player[]) {
+function convertToLineupPlayers(lineup: number[], roster: Player[]) {
   return lineup.reduce((acc, player, position) => {
     return { ...acc, [roster[player].name]: fieldPositions[position] }
-  }, {} as Lineup)
+  }, {} as Lineup["players"])
 }
 
 const cache = new WeakMap<Player[], Lineup[]>()
@@ -123,7 +126,12 @@ function generateIdealLineups(roster: Player[]) {
     }
   }
 
-  const lineups = [convertToLineup(bestLineup, roster)] as Lineup[]
+  const lineups: Lineup[] = [
+    {
+      players: convertToLineupPlayers(bestLineup, roster),
+      score: bestScore,
+    },
+  ]
   cache.set(roster, lineups)
 
   console.timeEnd("generateIdealLineups")
@@ -131,7 +139,7 @@ function generateIdealLineups(roster: Player[]) {
 }
 
 export function useLineups(roster: Player[]) {
-  const [lineups, setLineups] = useState<Lineup[]>([{}])
+  const [lineups, setLineups] = useState<Lineup[]>()
 
   useEffect(() => {
     if (!roster.length) return
@@ -141,5 +149,5 @@ export function useLineups(roster: Player[]) {
     })
   }, [roster])
 
-  return lineups
+  return [lineups?.[0], { loading: !lineups }] as const
 }

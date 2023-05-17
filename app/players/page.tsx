@@ -3,7 +3,7 @@
 import { UserGroupIcon } from "@heroicons/react/24/outline"
 import { usePlayers } from "../api/players"
 import { EmptyState } from "../components/common/EmptyState"
-import { Loader } from "../components/common/Loader"
+import { Skeleton } from "../components/common/Skeleton"
 import Title from "../components/common/Title"
 import StackedList from "../components/StackedList/StackedList"
 import StackedListItem from "../components/StackedList/StackedListItem"
@@ -21,7 +21,7 @@ export default function PlayersPage() {
       </div>
 
       {loading ? (
-        <Loader className="h-44 w-full" />
+        <Skeleton className="h-44" />
       ) : players?.length ? (
         <StackedList>
           {players.map((player) => (

@@ -7,8 +7,8 @@ import {
   usePlayer,
 } from "../../api/players"
 import { Button } from "../../components/common/Button"
-import { Loader } from "../../components/common/Loader"
 import { NotFound } from "../../components/common/NotFound"
+import { Skeleton } from "../../components/common/Skeleton"
 import Title from "../../components/common/Title"
 import { fieldPositionNames, fieldPositions } from "../../utils/positions"
 import { DeletePlayerModal } from "./components/DeletePlayerModal"
@@ -32,7 +32,7 @@ export default function PlayerPage({ params }: PlayerPageProps) {
   return (
     <div className="mb-20">
       {loading ? (
-        <Loader className="h-44 w-full" />
+        <Skeleton className="h-44" />
       ) : !player ? (
         <NotFound
           title="Player not found"

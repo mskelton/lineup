@@ -1,14 +1,14 @@
 export const fieldPositions = [
+  "pitcher",
   "catcher",
   "first",
-  "left",
-  "left-center",
-  "pitcher",
-  "right",
-  "right-center",
   "second",
   "shortstop",
   "third",
+  "left",
+  "left-center",
+  "right",
+  "right-center",
 ]
 
 export const fieldPositionNames: Record<string, string | undefined> = {

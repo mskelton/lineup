@@ -3,8 +3,9 @@
 import { UserGroupIcon } from "@heroicons/react/24/outline"
 import clsx from "clsx"
 import { Roster, useRosters } from "../api/rosters"
+import Badge from "../components/common/Badge"
 import { EmptyState } from "../components/common/EmptyState"
-import { Loader } from "../components/common/Loader"
+import { Skeleton } from "../components/common/Skeleton"
 import Title from "../components/common/Title"
 import StackedList from "../components/StackedList/StackedList"
 import StackedListItem from "../components/StackedList/StackedListItem"
@@ -31,7 +32,7 @@ export default function RostersPage() {
       </div>
 
       {loading ? (
-        <Loader className="h-44 w-full" />
+        <Skeleton className="h-44" />
       ) : rosters?.length ? (
         <StackedList>
           {rosters.map((roster) => {
@@ -44,14 +45,12 @@ export default function RostersPage() {
                 subtitle={`${total || "No"} player${total === 1 ? "" : "s"}`}
                 key={roster.id}
               >
-                <p
-                  className={clsx(
-                    "mt-1 hidden whitespace-nowrap rounded-md px-2 py-1 text-sm font-medium ring-1 ring-inset sm:block",
-                    statuses[roster.status as keyof typeof statuses]
-                  )}
+                <Badge
+                  size="lg"
+                  color={roster.status === "active" ? "green" : "yellow"}
                 >
                   {titleCase(roster.status)}
-                </p>
+                </Badge>
               </StackedListItem>
             )
           })}
