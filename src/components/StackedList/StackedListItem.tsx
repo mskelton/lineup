@@ -1,4 +1,5 @@
 import { ChevronRightIcon } from "@heroicons/react/24/outline"
+import { Link } from "react-router-dom"
 
 export interface StackedListItemProps {
   children?: React.ReactNode
@@ -18,10 +19,10 @@ export default function StackedListItem({
       <div className="flex gap-x-4">
         <div className="min-w-0 flex-auto">
           <p className="text-sm font-semibold leading-6 text-gray-900">
-            <a href={href}>
+            <Link to={href}>
               <span className="absolute inset-x-0 -top-px bottom-0" />
               {title}
-            </a>
+            </Link>
           </p>
 
           {subtitle ? (

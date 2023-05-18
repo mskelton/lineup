@@ -45,7 +45,7 @@ export default function Lineup({ rosterId = "123" }: LineupProps) {
           >
             <p className="mb-1 flex items-center justify-between text-base font-semibold">
               <span>Great Lineup!</span>
-              <SparklesIcon className="h-6 w-6" />
+              <SparklesIcon className="h-5 w-5" />
             </p>
 
             <p className="text-xs font-medium">
