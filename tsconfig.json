@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "app",
+    "baseUrl": "src",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
@@ -12,14 +12,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "jsx": "react-jsx",
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

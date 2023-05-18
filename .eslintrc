@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "@mskelton",
-    "@mskelton/eslint-config/typescript",
-    "next/core-web-vitals"
-  ],
+  "extends": ["@mskelton", "@mskelton/eslint-config/typescript"],
   "overrides": [
     {
       "files": ["*.styles.ts"],
