@@ -1,11 +1,4 @@
-import {
-  child,
-  push,
-  ref,
-  remove,
-  serverTimestamp,
-  set,
-} from "firebase/database"
+import { child, ref, remove, serverTimestamp, set } from "firebase/database"
 import { useMemo, useRef } from "react"
 import { useSnapshotVal } from "../hooks/useSnapshot"
 import { generateId } from "../utils/id"
@@ -67,4 +60,17 @@ export async function addPlayerPosition(
 export async function removePlayerPosition(playerId: string, position: string) {
   const positionRef = child(playersRef, `${playerId}/positions/${position}`)
   await remove(positionRef)
+}
+
+export async function setPlayerPositions(
+  playerId: string,
+  positions: string[]
+) {
+  const positionRef = child(playersRef, `${playerId}/positions`)
+  const orderedPositions = positions.reduce(
+    (acc, cur, i) => ({ ...acc, [cur]: i + 1 }),
+    {}
+  )
+
+  await set(positionRef, orderedPositions)
 }

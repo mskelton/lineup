@@ -1,16 +1,16 @@
 "use client"
 
-import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
+import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import {
   addPlayerPosition,
-  removePlayerPosition,
+  setPlayerPositions,
   usePlayer,
 } from "../../api/players"
-import { Button } from "../../components/common/Button"
 import { NotFound } from "../../components/common/NotFound"
 import { Skeleton } from "../../components/common/Skeleton"
 import Title from "../../components/common/Title"
 import { fieldPositionNames, fieldPositions } from "../../utils/positions"
+import { ActivePositions } from "./components/ActivePositions"
 import { DeletePlayerModal } from "./components/DeletePlayerModal"
 
 export interface PlayerPageProps {
@@ -21,13 +21,13 @@ export interface PlayerPageProps {
 
 export default function PlayerPage({ params }: PlayerPageProps) {
   const [player, { loading }] = usePlayer(params.slug)
-  const selectedItems = Object.entries(player?.positions ?? {}).map(
-    ([id, order]) => ({
+  const selectedItems = Object.entries(player?.positions ?? {})
+    .map(([id, order]) => ({
       id,
-      name: fieldPositionNames[id],
+      name: fieldPositionNames[id] ?? "",
       order,
-    })
-  )
+    }))
+    .sort((a, b) => a.order - b.order)
 
   return (
     <div className="mb-20">
@@ -47,24 +47,18 @@ export default function PlayerPage({ params }: PlayerPageProps) {
               <p className="mb-4 text-sm text-gray-700">
                 Drag to reorder your preferred positions
               </p>
-              <ul className="mb-8 space-y-3">
-                {selectedItems.map((item) => (
-                  <li
-                    className="flex w-full items-center justify-between gap-2 rounded-lg border-2 border-indigo-600 px-4 py-3 font-medium"
-                    key={item.id}
-                  >
-                    <span>{item.name}</span>
 
-                    <Button
-                      variant="ghost"
-                      size="md"
-                      onPress={() => removePlayerPosition(player.id, item.id)}
-                    >
-                      <TrashIcon className="h-5 w-5 text-red-600" />
-                    </Button>
-                  </li>
-                ))}
-              </ul>
+              <ActivePositions
+                key={player.positions?.length}
+                items={selectedItems}
+                playerId={player.id}
+                onReorder={(newItems) => {
+                  setPlayerPositions(
+                    player.id,
+                    newItems.map((item) => item.id)
+                  )
+                }}
+              />
             </>
           ) : null}
 

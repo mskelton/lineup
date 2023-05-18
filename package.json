@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@8.3.1",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -20,6 +21,7 @@
     "clsx": "^1.2.1",
     "eslint-config-next": "13.4.2",
     "firebase": "^9.22.0",
+    "framer-motion": "^10.12.12",
     "next": "13.4.2",
     "postcss": "8.4.23",
     "react": "18.2.0",
