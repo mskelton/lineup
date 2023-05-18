@@ -1,5 +1,6 @@
 import { Bars3Icon, TrashIcon } from "@heroicons/react/24/outline"
 import { Reorder, useDragControls } from "framer-motion"
+import { useEffect, useRef } from "react"
 import { removePlayerPosition } from "api/players"
 import Button from "components/common/Button"
 
@@ -19,9 +20,21 @@ export function ActivePositionItem({
   playerId,
 }: ActivePositionItemProps) {
   const controls = useDragControls()
+  const ref = useRef<HTMLElement>(null)
+
+  // Make touch events work properly for re-ordering
+  // https://github.com/framer/motion/issues/1597
+  useEffect(() => {
+    const el = ref.current
+    const handleTouch = (e: Event) => e.preventDefault()
+
+    el?.addEventListener("touchstart", handleTouch, { passive: false })
+    return () => el?.removeEventListener("touchstart", handleTouch)
+  }, [])
 
   return (
     <Reorder.Item
+      ref={ref}
       value={item}
       dragListener={false}
       dragControls={controls}
