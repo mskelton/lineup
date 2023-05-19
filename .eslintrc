@@ -1,5 +1,9 @@
 {
-  "extends": ["@mskelton", "@mskelton/eslint-config/typescript"],
+  "extends": [
+    "@mskelton",
+    "@mskelton/eslint-config/typescript",
+    "@mskelton/eslint-config/react"
+  ],
   "overrides": [
     {
       "files": ["*.styles.ts"],

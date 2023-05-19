@@ -39,7 +39,7 @@ export default function Player() {
               </p>
 
               <ActivePositions
-                key={player.positions?.length}
+                key={selectedItems?.length ?? 0}
                 items={selectedItems}
                 playerId={player.id}
                 onReorder={(newItems) => {

@@ -1,6 +1,6 @@
-import clsx from "clsx"
 import { cloneElement } from "react"
 import { Button, ButtonProps } from "react-aria-components"
+import { twMerge } from "tailwind-merge"
 
 const colors = {
   blue: "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500",
@@ -22,9 +22,10 @@ export function ActionButton({
 }: ActionButtonProps) {
   return (
     <Button
-      className={clsx(
+      className={twMerge(
         "flex flex-1 items-center justify-center rounded-md px-4 py-3 text-white",
-        colors[color]
+        colors[color],
+        props.isDisabled && "pointer-events-none bg-gray-400 opacity-50"
       )}
       type="button"
       {...props}

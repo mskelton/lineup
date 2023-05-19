@@ -20,7 +20,7 @@ export default function LineupItem({
       )}
     >
       <span className="font-medium">{player.name}</span>
-      <span className="text-xs text-gray-500">{position}</span>
+      <span className="text-xs text-gray-500">{position ?? "Sitting"}</span>
     </li>
   )
 }
