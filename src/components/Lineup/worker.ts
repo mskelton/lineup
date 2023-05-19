@@ -1,5 +1,18 @@
-import { Player } from "api/players"
-import { fieldPositions } from "utils/positions"
+import type { Player } from "api/players"
+
+// NOTE: Copied from utils/positions since we can't import in the worker.
+const fieldPositions = [
+  "pitcher",
+  "catcher",
+  "first",
+  "second",
+  "shortstop",
+  "third",
+  "left",
+  "left-center",
+  "right",
+  "right-center",
+]
 
 export type WorkerMessage =
   | {
