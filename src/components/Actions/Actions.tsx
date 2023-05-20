@@ -23,7 +23,7 @@ export default function Actions({ inning, onNext, onPrev }: ActionsProps) {
       <ActionButton
         color="green"
         icon={<BackwardIcon />}
-        isDisabled={!inning}
+        isDisabled={inning <= 1}
         onPress={onPrev}
       >
         Previous Inning
