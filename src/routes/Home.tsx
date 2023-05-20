@@ -1,18 +1,22 @@
-import { useState } from "react"
-import { useRosters } from "api/rosters"
+import SelectPlayers from "components/Home/SelectPlayers"
+import SelectRoster from "components/Home/SelectRoster"
 import Lineup from "components/Lineup/Lineup"
-
-function SelectRoster() {
-  const [rosters, { loading }] = useRosters()
-  console.log(rosters)
-
-  return loading ? <div /> : null
-}
+import { useStorageState } from "hooks/useStorageState"
 
 export default function Home() {
-  const [rosterId, setRosterId] = useState(
-    () => sessionStorage.getItem("rosterId") || ""
-  )
+  const [rosterId, setRosterId] = useStorageState("rosterId", "")
+  const [players, setPlayers] = useStorageState("players", [])
 
-  return rosterId ? <Lineup rosterId={rosterId} /> : <SelectRoster />
+  return !rosterId ? (
+    <SelectRoster
+      onSelect={(id) => {
+        sessionStorage.setItem("rosterId", id)
+        setRosterId(id)
+      }}
+    />
+  ) : !players.length ? (
+    <SelectPlayers onSelect={setPlayers} rosterId={rosterId} />
+  ) : (
+    <Lineup playerIds={players} rosterId={rosterId} />
+  )
 }

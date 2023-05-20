@@ -1,8 +1,8 @@
 import { SparklesIcon } from "@heroicons/react/24/outline"
 import { useMemo, useState } from "react"
 import { usePlayers } from "api/players"
-import { useRoster } from "api/rosters"
 import Actions from "components/Actions"
+import Alert from "components/common/Alert"
 import Skeleton from "components/common/Skeleton"
 import Title from "components/common/Title"
 import { fieldPositionNames, fieldPositions } from "utils/positions"
@@ -10,18 +10,18 @@ import LineupItem from "./LineupItem"
 import { useLineups } from "./useLineups"
 
 export interface LineupProps {
+  playerIds: string[]
   rosterId: string
 }
 
-export default function Lineup({ rosterId }: LineupProps) {
-  const [roster, { loading: loadingRoster }] = useRoster(rosterId)
+export default function Lineup({ playerIds }: LineupProps) {
   const [players, { loading: loadingPlayers }] = usePlayers()
   const [inning, setInning] = useState(1)
 
   // Remove any players in the roster that were deleted
   const activeRoster = useMemo(
-    () => players?.filter((player) => roster?.players?.[player.id]) ?? [],
-    [players, roster?.players]
+    () => players?.filter((player) => playerIds.includes(player.id)) ?? [],
+    [players, playerIds]
   )
 
   // Trim the roster to the number of players that can be on the field
@@ -32,7 +32,7 @@ export default function Lineup({ rosterId }: LineupProps) {
   }, [activeRoster, extra, inning])
 
   const [lineup, { loading: loadingLineups }] = useLineups(req)
-  const loading = loadingRoster || loadingPlayers || loadingLineups
+  const loading = loadingPlayers || loadingLineups
 
   const sortedRoster = useMemo(() => {
     if (!lineup) return activeRoster
@@ -55,20 +55,17 @@ export default function Lineup({ rosterId }: LineupProps) {
         {loading ? (
           <Skeleton className="h-16" />
         ) : (
-          <div
-            className="w-full rounded-md bg-green-50 px-4 py-3 text-green-700 ring-1 ring-inset ring-green-600/20"
-            color="green"
+          <Alert
+            title={
+              <>
+                <span>Great Lineup!</span>
+                <SparklesIcon className="h-5 w-5" />
+              </>
+            }
           >
-            <p className="mb-1 flex items-center justify-between text-base font-semibold">
-              <span>Great Lineup!</span>
-              <SparklesIcon className="h-5 w-5" />
-            </p>
-
-            <p className="text-xs font-medium">
-              With a total score of {lineup?.score}, each player received either
-              their 1<sup>st</sup> or 2<sup>nd</sup> choice.
-            </p>
-          </div>
+            With a total score of {lineup?.score}, each player received either
+            their 1<sup>st</sup> or 2<sup>nd</sup> choice.
+          </Alert>
         )}
       </div>
 

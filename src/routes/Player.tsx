@@ -1,6 +1,6 @@
-import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import { useParams } from "react-router-dom"
 import { addPlayerPosition, setPlayerPositions, usePlayer } from "api/players"
+import AddButton from "components/common/AddButton"
 import NotFound from "components/common/NotFound"
 import Skeleton from "components/common/Skeleton"
 import Title from "components/common/Title"
@@ -64,9 +64,8 @@ export default function Player() {
               )
               .map((position) => (
                 <li key={position}>
-                  <button
+                  <AddButton
                     aria-label={`Add ${fieldPositionNames[position]}`}
-                    className="flex w-full items-center justify-between gap-2 rounded-lg border border-gray-200 px-4 py-3 text-sm font-medium hover:bg-gray-100 disabled:pointer-events-none disabled:bg-gray-200 disabled:opacity-50"
                     disabled={selectedItems.length >= 4}
                     onClick={() => {
                       addPlayerPosition(
@@ -75,11 +74,9 @@ export default function Player() {
                         selectedItems.length + 1
                       )
                     }}
-                    type="button"
                   >
                     {fieldPositionNames[position]}
-                    <PlusCircleIcon className="h-5 w-5 text-gray-500" />
-                  </button>
+                  </AddButton>
                 </li>
               ))}
           </ul>

@@ -11,7 +11,7 @@ const colors = {
 export interface ActionButtonProps extends ButtonProps {
   children: React.ReactNode
   color: keyof typeof colors
-  icon: React.ReactElement
+  icon?: React.ReactElement
 }
 
 export function ActionButton({
@@ -30,8 +30,24 @@ export function ActionButton({
       type="button"
       {...props}
     >
-      {cloneElement(icon, { className: "h-6 w-6" })}
-      <span className="sr-only">{children}</span>
+      {icon ? cloneElement(icon, { className: "h-6 w-6" }) : null}
+      <span className={icon ? "sr-only" : ""}>{children}</span>
     </Button>
+  )
+}
+
+export interface ActionButtonContainerProps {
+  children: React.ReactNode
+}
+
+ActionButton.Container = function ActionButtonContainer({
+  children,
+}: ActionButtonContainerProps) {
+  return (
+    <div className="mt-20">
+      <div className="fixed bottom-0 right-0 flex w-full justify-evenly gap-2 bg-slate-100 p-4 shadow-lg lg:w-[calc(100%-18rem)]">
+        {children}
+      </div>
+    </div>
   )
 }
