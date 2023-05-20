@@ -37,8 +37,8 @@ export default function StackedListItem({
         {children}
 
         <ChevronRightIcon
-          className="h-5 w-5 flex-none text-gray-400"
           aria-hidden="true"
+          className="h-5 w-5 flex-none text-gray-400"
         />
       </div>
     </li>

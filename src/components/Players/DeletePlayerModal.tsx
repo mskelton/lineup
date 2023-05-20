@@ -11,11 +11,11 @@ export function DeletePlayerModal({ id }: DeletePlayerModalProps) {
 
   return (
     <DeleteModal
-      title="Delete player"
       onDelete={async () => {
         await deletePlayer(id)
         navigate("/players")
       }}
+      title="Delete player"
     >
       Are you sure you want to delete this player? Their fielding position
       preferences will be permanently removed from our servers forever. This

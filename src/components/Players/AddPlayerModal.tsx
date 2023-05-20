@@ -8,12 +8,12 @@ export default function AddPlayerModal() {
 
   return (
     <AddModal
-      title="Create player"
       icon={<UserPlusIcon />}
       onCreate={async (name) => {
         const id = await addPlayer(name)
         navigate(`/players/${id}`)
       }}
+      title="Create player"
     />
   )
 }

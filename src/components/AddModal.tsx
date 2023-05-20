@@ -51,10 +51,10 @@ export function AddModal({ icon, onCreate, title }: AddModalProps) {
                 <div className="mt-2 sm:mt-4">
                   <Input
                     autoFocus
-                    name="name"
                     label="Name"
-                    type="text"
                     labelVisibility="hidden"
+                    name="name"
+                    type="text"
                   />
                 </div>
               </div>
@@ -62,18 +62,18 @@ export function AddModal({ icon, onCreate, title }: AddModalProps) {
 
             <div className="mt-5 flex flex-col gap-2 sm:mt-8 sm:flex-row-reverse">
               <Button
-                variant="primary"
                 className="w-full sm:ml-3 sm:w-auto"
                 isLoading={loading}
                 type="submit"
+                variant="primary"
               >
                 Create
               </Button>
 
               <Button
                 className="w-full sm:w-auto"
-                variant="secondary"
                 onPress={close}
+                variant="secondary"
               >
                 Cancel
               </Button>

@@ -25,8 +25,8 @@ export default function Player() {
         <Skeleton className="h-44" />
       ) : !player ? (
         <NotFound
-          title="Player not found"
           subtitle="Sorry, we couldn’t find the player you're looking for."
+          title="Player not found"
         />
       ) : (
         <div>
@@ -41,13 +41,13 @@ export default function Player() {
               <ActivePositions
                 key={selectedItems?.length ?? 0}
                 items={selectedItems}
-                playerId={player.id}
                 onReorder={(newItems) => {
                   setPlayerPositions(
                     player.id,
                     newItems.map((item) => item.id)
                   )
                 }}
+                playerId={player.id}
               />
             </>
           ) : null}
@@ -65,8 +65,8 @@ export default function Player() {
               .map((position) => (
                 <li key={position}>
                   <button
-                    className="flex w-full items-center justify-between gap-2 rounded-lg border border-gray-200 px-4 py-3 text-sm font-medium hover:bg-gray-100 disabled:pointer-events-none disabled:bg-gray-200 disabled:opacity-50"
                     aria-label={`Add ${fieldPositionNames[position]}`}
+                    className="flex w-full items-center justify-between gap-2 rounded-lg border border-gray-200 px-4 py-3 text-sm font-medium hover:bg-gray-100 disabled:pointer-events-none disabled:bg-gray-200 disabled:opacity-50"
                     disabled={selectedItems.length >= 4}
                     onClick={() => {
                       addPlayerPosition(
@@ -75,6 +75,7 @@ export default function Player() {
                         selectedItems.length + 1
                       )
                     }}
+                    type="button"
                   >
                     {fieldPositionNames[position]}
                     <PlusCircleIcon className="h-5 w-5 text-gray-500" />

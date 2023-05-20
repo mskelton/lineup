@@ -20,16 +20,16 @@ export function NavSidebar({ onClose }: NavSidebarProps) {
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-2">
       <div className="flex h-16 shrink-0 items-center">
         <img
+          alt="Your Company"
           className="h-8 w-auto"
           src="https://tailwindui.com/img/logos/mark.svg?color=white"
-          alt="Your Company"
         />
       </div>
 
       <nav className="flex flex-1 flex-col">
-        <ul role="list" className="flex flex-1 flex-col gap-y-7">
+        <ul className="flex flex-1 flex-col gap-y-7" role="list">
           <li>
-            <ul role="list" className="-mx-2 space-y-1">
+            <ul className="-mx-2 space-y-1" role="list">
               {navItems.map((item) => (
                 <NavSidebarItem key={item.name} item={item} onClick={onClose} />
               ))}

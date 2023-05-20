@@ -18,13 +18,13 @@ export function ActivePositions({
   return (
     <div className="mb-8 space-y-3">
       <Reorder.Group
-        className="mb-8 space-y-3"
         axis="y"
-        values={items}
+        className="mb-8 space-y-3"
         onReorder={(newItems) => {
           setItems(newItems)
           onReorder(newItems)
         }}
+        values={items}
       >
         {items.map((item) => (
           <ActivePositionItem key={item.id} item={item} playerId={playerId} />

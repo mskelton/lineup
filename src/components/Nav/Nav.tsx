@@ -17,7 +17,7 @@ export default function Nav() {
 
   return (
     <>
-      <Transition.Root show={sidebarOpen} as={Fragment}>
+      <Transition.Root as={Fragment} show={sidebarOpen}>
         <Dialog
           as="div"
           className="relative z-50 lg:hidden"
@@ -57,14 +57,14 @@ export default function Nav() {
                 >
                   <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
                     <button
-                      type="button"
                       className="-m-2.5 p-2.5"
                       onClick={handleClose}
+                      type="button"
                     >
                       <span className="sr-only">Close sidebar</span>
                       <XMarkIcon
-                        className="h-6 w-6 text-white"
                         aria-hidden="true"
+                        className="h-6 w-6 text-white"
                       />
                     </button>
                   </div>
@@ -83,12 +83,12 @@ export default function Nav() {
 
       <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-indigo-600 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
         <button
-          type="button"
           className="-m-2.5 p-2.5 text-indigo-200 lg:hidden"
           onClick={() => setSidebarOpen(true)}
+          type="button"
         >
           <span className="sr-only">Open sidebar</span>
-          <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+          <Bars3Icon aria-hidden="true" className="h-6 w-6" />
         </button>
 
         <div className="flex-1 text-sm font-semibold leading-6 text-white">

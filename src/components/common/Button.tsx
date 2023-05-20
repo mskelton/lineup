@@ -34,9 +34,9 @@ export default function Button({
 
   return (
     <BaseButton
+      className={styles.base()}
       isDisabled={disabled}
       type="button"
-      className={styles.base()}
       {...props}
     >
       <span className={styles.content()}>{children}</span>

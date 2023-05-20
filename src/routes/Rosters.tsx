@@ -32,14 +32,14 @@ export default function Rosters() {
 
             return (
               <StackedListItem
-                title={roster.name}
+                key={roster.id}
                 href={`/rosters/${roster.id}`}
                 subtitle={`${total || "No"} player${total === 1 ? "" : "s"}`}
-                key={roster.id}
+                title={roster.name}
               >
                 <Badge
-                  size="lg"
                   color={roster.status === "active" ? "green" : "yellow"}
+                  size="lg"
                 >
                   {titleCase(roster.status)}
                 </Badge>

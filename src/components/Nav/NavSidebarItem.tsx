@@ -16,7 +16,6 @@ export function NavSidebarItem({ item, onClick }: NavSidebarItemProps) {
   return (
     <li>
       <NavLink
-        to={item.href}
         className={({ isActive }) =>
           clsx(
             "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 transition-colors",
@@ -26,10 +25,11 @@ export function NavSidebarItem({ item, onClick }: NavSidebarItemProps) {
           )
         }
         onClick={onClick}
+        to={item.href}
       >
         <item.icon
-          className="h-6 w-6 shrink-0 text-current"
           aria-hidden="true"
+          className="h-6 w-6 shrink-0 text-current"
         />
 
         {item.name}

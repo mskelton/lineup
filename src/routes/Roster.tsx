@@ -21,8 +21,8 @@ export default function RosterPage() {
         <Skeleton className="h-44" />
       ) : !roster ? (
         <NotFound
-          title="Roster not found"
           subtitle="Sorry, we couldn’t find the roster you're looking for."
+          title="Roster not found"
         />
       ) : (
         <div>
@@ -33,7 +33,6 @@ export default function RosterPage() {
               <span>Players</span>
 
               <Button
-                variant="link"
                 onPress={() => {
                   setAllPlayersActive(
                     roster.id,
@@ -41,6 +40,7 @@ export default function RosterPage() {
                     !isAllSelected
                   )
                 }}
+                variant="link"
               >
                 {isAllSelected ? "Remove" : "Add"} all
               </Button>
@@ -64,9 +64,9 @@ export default function RosterPage() {
 
                     <Switch
                       isSelected={isSelected}
-                      onChange={(isSelected) => handleChange(isSelected)}
                       label={`Add ${player.name} to roster`}
                       labelVisibility="hidden"
+                      onChange={(isSelected) => handleChange(isSelected)}
                     />
                   </div>
                 )

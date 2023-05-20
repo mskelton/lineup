@@ -8,12 +8,12 @@ export default function AddRosterModal() {
 
   return (
     <AddModal
-      title="Create roster"
       icon={<SquaresPlusIcon />}
       onCreate={async (name) => {
         const id = await addRoster(name)
         navigate(`/rosters/${id}`)
       }}
+      title="Create roster"
     />
   )
 }

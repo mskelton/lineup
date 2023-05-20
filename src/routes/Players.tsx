@@ -24,8 +24,8 @@ export default function Players() {
         <StackedList>
           {players.map((player) => (
             <StackedListItem
-              href={`/players/${player.id}`}
               key={player.id}
+              href={`/players/${player.id}`}
               title={player.name}
             />
           ))}

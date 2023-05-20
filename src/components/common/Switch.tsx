@@ -36,12 +36,12 @@ export default function Switch({
       {align === "left" ? label : null}
 
       <BaseSwitch
-        id={id}
-        isSelected={isSelected}
         className={clsx(
           "relative inline-flex h-6 w-11 cursor-pointer items-center rounded-full",
           isSelected ? "bg-indigo-600" : "bg-gray-200"
         )}
+        id={id}
+        isSelected={isSelected}
         {...props}
       >
         <span

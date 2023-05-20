@@ -26,8 +26,8 @@ export default function DeleteModal({
             <div className="sm:flex sm:items-start">
               <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                 <ExclamationTriangleIcon
-                  className="h-6 w-6 text-red-600"
                   aria-hidden="true"
+                  className="h-6 w-6 text-red-600"
                 />
               </div>
 
@@ -44,21 +44,21 @@ export default function DeleteModal({
 
             <div className="mt-5 flex flex-col gap-2 sm:mt-8 sm:flex-row-reverse">
               <Button
-                variant="danger"
                 className="w-full sm:ml-3 sm:w-auto"
                 onPress={() => {
                   onDelete()
                   close()
                 }}
+                variant="danger"
               >
                 Delete
               </Button>
 
               <Button
                 autoFocus
-                variant="secondary"
                 className="mt-3 w-full sm:mt-0 sm:w-auto"
                 onPress={close}
+                variant="secondary"
               >
                 Cancel
               </Button>

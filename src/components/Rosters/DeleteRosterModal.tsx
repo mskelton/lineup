@@ -11,11 +11,11 @@ export default function DeleteRosterModal({ id }: DeleteRosterModalProps) {
 
   return (
     <DeleteModal
-      title="Delete roster"
       onDelete={async () => {
         await deleteRoster(id)
         navigate("/rosters")
       }}
+      title="Delete roster"
     >
       Are you sure you want to delete this roster? This will not delete any
       players, but you will loose all roster data. This action cannot be undone.

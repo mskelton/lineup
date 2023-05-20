@@ -20,8 +20,8 @@ export function ActivePositionItem({
 }: ActivePositionItemProps) {
   return (
     <Reorder.Item
-      value={item}
       className="mb-3 flex w-full select-none items-center justify-between gap-2 rounded-lg border border-indigo-600 bg-white px-4 py-2 text-sm font-medium"
+      value={item}
     >
       <span className="flex items-center gap-3">
         <div className="cursor-grab">
@@ -32,9 +32,9 @@ export function ActivePositionItem({
       </span>
 
       <Button
-        variant="ghost"
-        size="md"
         onPress={() => removePlayerPosition(playerId, item.id)}
+        size="md"
+        variant="ghost"
       >
         <TrashIcon className="h-5 w-5 text-red-600" />
       </Button>
