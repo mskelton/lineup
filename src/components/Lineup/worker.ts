@@ -22,6 +22,7 @@ export type WorkerMessage =
     }
   | {
       lineups: Lineup[]
+      score: number
       token: string
       type: "lineups"
     }

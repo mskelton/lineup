@@ -32,7 +32,7 @@ export default function Actions({ inning, onNext, onPrev }: ActionsProps) {
       <ActionButton
         color="blue"
         icon={<ForwardIcon />}
-        isDisabled={inning > totalInnings}
+        isDisabled={inning >= totalInnings * 2}
         onPress={onNext}
       >
         Next Inning
