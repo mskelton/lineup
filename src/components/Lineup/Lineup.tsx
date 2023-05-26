@@ -16,6 +16,7 @@ export default function Lineup({ playerIds }: LineupProps) {
   const [inning, setInning] = useState(1)
   const realInning = Math.ceil(inning / 2)
   const top = inning % 2 === 1
+  const batting = top
 
   // Remove any players in the roster that were deleted
   const activeRoster = useMemo(
@@ -26,21 +27,21 @@ export default function Lineup({ playerIds }: LineupProps) {
   return (
     <div className="mb-20">
       <div className="mb-4 flex items-end justify-between">
-        <Title>Batting</Title>
+        <Title>{batting ? "Batting" : "Fielding"}</Title>
 
         <p className="text-gray-600">
           {top ? "Top" : "Bottom"} of the {formatOrdinal(realInning)}
         </p>
       </div>
 
-      {top ? (
-        <Fielding
+      {batting ? (
+        <Batting
           inning={realInning}
           loadingPlayers={loadingPlayers}
           roster={activeRoster}
         />
       ) : (
-        <Batting
+        <Fielding
           inning={realInning}
           loadingPlayers={loadingPlayers}
           roster={activeRoster}
