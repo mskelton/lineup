@@ -5,9 +5,9 @@ import { useRoster } from "api/rosters"
 import { ActionButton } from "components/Actions/ActionButton"
 import AddButton from "components/common/AddButton"
 import Alert from "components/common/Alert"
-import Button from "components/common/Button"
 import Skeleton from "components/common/Skeleton"
 import ActivePositionItem from "components/Players/ActivePositionItem"
+import { truthy } from "utils/truthy"
 
 export interface SelectPlayer {
   onSelect(ids: string[]): void
@@ -50,10 +50,10 @@ export default function SelectPlayer({ onSelect, rosterId }: SelectPlayer) {
           onReorder={setSelected}
           values={selected}
         >
-          {selected.map((playerId) => {
-            const player = active.find((p) => p.id === playerId)!
-
-            return (
+          {selected
+            .map((playerId) => active.find((p) => p.id === playerId))
+            .filter(truthy)
+            .map((player) => (
               <ActivePositionItem
                 key={player.id}
                 onDelete={() => {
@@ -63,8 +63,7 @@ export default function SelectPlayer({ onSelect, rosterId }: SelectPlayer) {
               >
                 {player.name}
               </ActivePositionItem>
-            )
-          })}
+            ))}
         </Reorder.Group>
       ) : (
         <p className="mb-6 text-xs text-gray-600">No players selected</p>
