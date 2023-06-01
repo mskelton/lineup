@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react"
 import {
+  ArrowPathIcon,
   Bars3Icon,
   ListBulletIcon,
   Squares2X2Icon,
@@ -95,11 +96,16 @@ export default function Nav() {
           {activeNavItem?.name}
         </div>
 
-        {/* TODO */}
-        <div className="text-sm font-semibold leading-6 text-white">
-          <Squares2X2Icon />
-          <ListBulletIcon />
-        </div>
+        <button
+          className="text-white"
+          onClick={() => {
+            sessionStorage.clear()
+            window.dispatchEvent(new CustomEvent("clear-storage"))
+          }}
+          type="button"
+        >
+          <ArrowPathIcon className="h-5 w-5" />
+        </button>
       </div>
     </>
   )

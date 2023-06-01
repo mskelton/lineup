@@ -21,14 +21,7 @@ export default function Fielding({
   loadingPlayers,
   roster,
 }: FieldingProps) {
-  // Trim the roster to the number of players that can be on the field
-  const extra = roster.length - fieldPositions.length
-  const req = useMemo(() => {
-    const sitting = Math.abs((inning * extra) % fieldPositions.length)
-    return roster.filter((_, i) => i < sitting || i >= sitting + extra)
-  }, [roster, extra, inning])
-
-  const [lineup, { loading: loadingLineups }] = useLineups(req)
+  const [lineup, { loading: loadingLineups }] = useLineups(roster, inning)
   const loading = loadingPlayers || loadingLineups
 
   const sortedRoster = useMemo(() => {

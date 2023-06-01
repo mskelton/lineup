@@ -6,7 +6,7 @@ const worker = new Worker(new URL("./worker.ts", import.meta.url), {
   type: "module",
 })
 
-export function useLineups(roster: Player[]) {
+export function useLineups(roster: Player[], inning: number) {
   const [lineups, setLineups] = useState<Lineup[]>()
 
   useEffect(() => {
@@ -23,10 +23,10 @@ export function useLineups(roster: Player[]) {
     }
 
     worker.addEventListener("message", handleMessage)
-    worker.postMessage({ roster, token, type: "generate" })
+    worker.postMessage({ inning, roster, token, type: "generate" })
 
     return () => worker.removeEventListener("message", handleMessage)
-  }, [roster])
+  }, [inning, roster])
 
   return [lineups?.[0], { loading: !lineups }] as const
 }

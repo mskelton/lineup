@@ -1,8 +1,4 @@
-import {
-  ArrowPathIcon,
-  BackwardIcon,
-  ForwardIcon,
-} from "@heroicons/react/24/outline"
+import { BackwardIcon, ForwardIcon } from "@heroicons/react/24/outline"
 import { ActionButton } from "./ActionButton"
 
 export const totalInnings = 7
@@ -16,10 +12,6 @@ export interface ActionsProps {
 export default function Actions({ inning, onNext, onPrev }: ActionsProps) {
   return (
     <ActionButton.Container>
-      <ActionButton color="red" icon={<ArrowPathIcon />}>
-        Regenerate Lineup
-      </ActionButton>
-
       <ActionButton
         color="green"
         icon={<BackwardIcon />}

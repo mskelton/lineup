@@ -16,6 +16,7 @@ const fieldPositions = [
 
 export type WorkerMessage =
   | {
+      inning: number
       roster: Player[]
       token: string
       type: "generate"
@@ -41,7 +42,7 @@ function convertToLineupPlayers(lineup: number[], roster: Player[]) {
   }, {} as Lineup["players"])
 }
 
-const cache = new WeakMap<Player[], Lineup[]>()
+const cache = new Map<string, Lineup[]>()
 
 /**
  * Score the lineup based on the players and their positions. The goal is the
@@ -49,8 +50,9 @@ const cache = new WeakMap<Player[], Lineup[]>()
  *
  * @param lineup The lineup to score. This is a list corresponding to the list
  * of positions where each value is the player index.
- * @param playerPreferences The list of players and their scores for each position. If a
- * position is not chosen by the player, the score is Infinity.
+ * @param playerPreferences The list of players and their scores for each position.
+ * If a position is not chosen by the player, the score is very high to discourage
+ * using that lineup..
  * @returns The score of the lineup. If the lineup is invalid, Infinity is returned.
  */
 function getScore(lineup: number[], playerPreferences: number[][]) {
@@ -104,9 +106,29 @@ function nextLineup(lineup: number[], playersByPosition: number[][]) {
   return false
 }
 
+/**
+ * When we have more players than positions, we need to bench different players
+ * each inning. This is a little tricky since some positions have fewer players
+ * that can play them, such as pitcher or shortstop.
+ *
+ * To account for this, we generate a score for each player. This score is based
+ * on how many players have selected a given position. More desirable positions
+ * have a higher score, while less desirable positions have a lower score.
+ *
+ * Players are then sorted by their score and players that sit will be chosen
+ * evenly throughout the list. This ensures that players playing the rare
+ * positions will not be benched at the same time to ensure those positions have
+ * an available player.
+ */
+function benchPlayers(roster: Player[], inning: number) {
+  // TODO:
+  return roster.slice(0, 9)
+}
+
 function generateIdealLineups(roster: Player[]) {
-  if (cache.has(roster)) {
-    return cache.get(roster)!
+  const cacheKey = JSON.stringify(roster)
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey)!
   }
 
   // Step 1 is constructing a mapping of positions to players that can play
@@ -155,8 +177,8 @@ function generateIdealLineups(roster: Player[]) {
       score: bestScore,
     },
   ]
-  cache.set(roster, lineups)
 
+  cache.set(cacheKey, lineups)
   return lineups
 }
 
@@ -164,7 +186,8 @@ self.addEventListener("message", (event) => {
   const data = event.data as WorkerMessage
 
   if (data.type === "generate") {
-    const lineups = generateIdealLineups(data.roster)
+    const roster = benchPlayers(data.roster, data.inning)
+    const lineups = generateIdealLineups(roster)
     self.postMessage({ lineups, token: data.token, type: "lineups" })
   }
 })
