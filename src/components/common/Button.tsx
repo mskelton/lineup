@@ -25,7 +25,6 @@ export default function Button({
 }: ButtonProps) {
   const disabled = isDisabled || isLoading
   const styles = button({
-    className,
     isDisabled: disabled,
     isLoading,
     size,
@@ -34,7 +33,7 @@ export default function Button({
 
   return (
     <BaseButton
-      className={styles.base()}
+      className={styles.base({ className })}
       isDisabled={disabled}
       type="button"
       {...props}

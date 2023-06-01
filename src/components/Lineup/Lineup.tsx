@@ -8,15 +8,15 @@ import Fielding from "./Fielding"
 
 export interface LineupProps {
   playerIds: string[]
-  rosterId: string
+  venue: string
 }
 
-export default function Lineup({ playerIds }: LineupProps) {
+export default function Lineup({ playerIds, venue }: LineupProps) {
   const [players, { loading: loadingPlayers }] = usePlayers()
   const [inning, setInning] = useState(1)
   const realInning = Math.ceil(inning / 2)
   const top = inning % 2 === 1
-  const batting = top
+  const batting = venue === "away" ? top : !top
 
   // Remove any players in the roster that were deleted
   const activeRoster = useMemo(
