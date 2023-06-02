@@ -18,9 +18,9 @@ const suffixes = new Map([
   ["other", "th"],
 ])
 
-export function formatOrdinal(num: number) {
+export function formatOrdinal(num: number, onlySuffix = false) {
   const rule = plural.select(num)
   const suffix = suffixes.get(rule)
 
-  return `${num}${suffix}`
+  return onlySuffix ? suffix : `${num}${suffix}`
 }

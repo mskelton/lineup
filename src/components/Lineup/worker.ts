@@ -28,9 +28,15 @@ export type WorkerMessage =
       type: "lineups"
     }
 
-export interface Lineup {
-  players: Record<string, string | undefined>
+export interface Analysis {
+  max: number
+  min: number
   score: number
+}
+
+export interface Lineup {
+  analysis: Analysis
+  players: Record<string, string | undefined>
 }
 
 /**
@@ -162,6 +168,15 @@ function getPlayersByPosition(roster: Player[]) {
   })
 }
 
+function analyzeLineup(lineup: number[], playerPreferences: number[][]) {
+  const scores = lineup.map((player, i) => playerPreferences[player][i])
+
+  return {
+    max: Math.max(...scores) + 1,
+    min: Math.min(...scores) + 1,
+  }
+}
+
 function generateIdealLineups(roster: Player[]) {
   const cacheKey = JSON.stringify(roster)
   if (cache.has(cacheKey)) {
@@ -205,8 +220,11 @@ function generateIdealLineups(roster: Player[]) {
 
   const lineups: Lineup[] = [
     {
+      analysis: {
+        ...analyzeLineup(bestLineup, playerPreferences),
+        score: bestScore,
+      },
       players: convertToLineupPlayers(bestLineup, roster),
-      score: bestScore,
     },
   ]
 

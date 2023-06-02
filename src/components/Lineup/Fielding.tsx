@@ -1,12 +1,10 @@
-import {
-  ExclamationCircleIcon,
-  SparklesIcon,
-} from "@heroicons/react/24/outline"
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline"
 import { useMemo } from "react"
 import { Player } from "api/players"
 import Alert from "components/common/Alert"
 import Skeleton from "components/common/Skeleton"
 import { fieldPositionNames, fieldPositions } from "utils/positions"
+import AnalysisSummary from "./AnalysisSummary"
 import LineupItem from "./LineupItem"
 import { useLineups } from "./useLineups"
 
@@ -37,7 +35,7 @@ export default function Fielding({
     })
   }, [roster, lineup])
 
-  return lineup?.score === Infinity ? (
+  return lineup?.analysis.score === Infinity ? (
     <Alert
       title={
         <>
@@ -55,19 +53,9 @@ export default function Fielding({
       <div className="mb-8">
         {loading ? (
           <Skeleton className="h-16" />
-        ) : (
-          <Alert
-            title={
-              <>
-                <span>Great Lineup!</span>
-                <SparklesIcon className="h-5 w-5" />
-              </>
-            }
-          >
-            With a total score of {lineup?.score}, each player received either
-            their 1<sup>st</sup> or 2<sup>nd</sup> choice.
-          </Alert>
-        )}
+        ) : lineup ? (
+          <AnalysisSummary analysis={lineup.analysis} />
+        ) : null}
       </div>
 
       <ul className="space-y-3">
