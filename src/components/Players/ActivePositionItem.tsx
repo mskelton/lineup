@@ -36,21 +36,21 @@ export default function ActivePositionItem({
       style={style}
     >
       <div className="flex items-center gap-3">
-        <button
-          {...attributes}
-          {...listeners}
-          className="-my-3.5 -ml-4 cursor-grab touch-none py-3.5 pl-4"
-          type="button"
-        >
-          <Bars3Icon className="h-5 w-5" />
-        </button>
+        <Button className="-ml-2" onPress={onDelete} size="md" variant="ghost">
+          <TrashIcon className="h-5 w-5 text-red-600" />
+        </Button>
 
         <span>{children}</span>
       </div>
 
-      <Button onPress={onDelete} size="md" variant="ghost">
-        <TrashIcon className="h-5 w-5 text-red-600" />
-      </Button>
+      <button
+        {...attributes}
+        {...listeners}
+        className="-my-3.5 -mr-4 cursor-grab touch-none py-3.5 pl-12 pr-4"
+        type="button"
+      >
+        <Bars3Icon className="h-5 w-5" />
+      </button>
     </div>
   )
 }
