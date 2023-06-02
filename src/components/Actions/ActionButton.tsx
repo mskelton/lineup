@@ -23,7 +23,7 @@ export function ActionButton({
   return (
     <Button
       className={twMerge(
-        "flex flex-1 items-center justify-center rounded-md px-4 py-3 text-white",
+        "flex flex-1 items-center justify-center rounded-md px-4 py-3 text-white focus:outline-none focus:ring-offset-2 focus-visible:ring-2",
         colors[color],
         props.isDisabled && "pointer-events-none bg-gray-400 opacity-50"
       )}
