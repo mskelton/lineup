@@ -106,6 +106,26 @@ function nextLineup(lineup: number[], playersByPosition: number[][]) {
   return false
 }
 
+function getPlayerPositionScores(roster: Player[]) {
+  const positionScores = getPlayersByPosition(roster).map(
+    (players) => players.length ** 2
+  )
+
+  return roster.reduce((acc, player) => {
+    const score = Object.keys(player.positions ?? {})
+      .map((position) => fieldPositions.indexOf(position))
+      .map((position) => positionScores[position])
+      .reduce((acc, score) => acc + score, 0)
+
+    return { ...acc, [player.id]: score }
+  }, {} as Record<string, number>)
+}
+
+function sortPlayers(roster: Player[]) {
+  const playerScores = getPlayerPositionScores(roster)
+  return roster.slice().sort((a, b) => playerScores[a.id] - playerScores[b.id])
+}
+
 /**
  * When we have more players than positions, we need to bench different players
  * each inning. This is a little tricky since some positions have fewer players
@@ -120,10 +140,26 @@ function nextLineup(lineup: number[], playersByPosition: number[][]) {
  * positions will not be benched at the same time to ensure those positions have
  * an available player.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function benchPlayers(roster: Player[], inning: number) {
-  // TODO:
-  return roster.slice(0, 10)
+  const totalPlayers = roster.length
+  const extra = totalPlayers - fieldPositions.length
+
+  // If we have fewer players than positions, we don't need to bench anyone.
+  if (extra <= 0) {
+    return roster
+  }
+
+  const interval = Math.ceil(totalPlayers / extra)
+  return roster.filter((_, i) => (i - inning) % interval !== 0)
+}
+
+function getPlayersByPosition(roster: Player[]) {
+  return fieldPositions.map((position) => {
+    return roster.reduce((acc, player, i) => {
+      const playerPositions = Object.keys(player.positions ?? {})
+      return playerPositions.some((p) => p === position) ? [...acc, i] : acc
+    }, [] as number[])
+  })
 }
 
 function generateIdealLineups(roster: Player[]) {
@@ -134,12 +170,7 @@ function generateIdealLineups(roster: Player[]) {
 
   // Step 1 is constructing a mapping of positions to players that can play
   // those positions.
-  const playersByPosition = fieldPositions.map((position) => {
-    return roster.reduce((acc, player, i) => {
-      const playerPositions = Object.keys(player.positions ?? {})
-      return playerPositions.some((p) => p === position) ? [...acc, i] : acc
-    }, [] as number[])
-  })
+  const playersByPosition = getPlayersByPosition(roster)
 
   // Next, we need to construct a inverse list of players and their position
   // preferences. This is used for scoring the lineups.
@@ -187,7 +218,8 @@ self.addEventListener("message", (event) => {
   const data = event.data as WorkerMessage
 
   if (data.type === "generate") {
-    const roster = benchPlayers(data.roster, data.inning)
+    const sorted = sortPlayers(data.roster)
+    const roster = benchPlayers(sorted, data.inning)
     const lineups = generateIdealLineups(roster)
     self.postMessage({ lineups, token: data.token, type: "lineups" })
   }
