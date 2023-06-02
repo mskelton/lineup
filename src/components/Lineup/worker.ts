@@ -120,9 +120,10 @@ function nextLineup(lineup: number[], playersByPosition: number[][]) {
  * positions will not be benched at the same time to ensure those positions have
  * an available player.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function benchPlayers(roster: Player[], inning: number) {
   // TODO:
-  return roster.slice(0, 9)
+  return roster.slice(0, 10)
 }
 
 function generateIdealLineups(roster: Player[]) {
