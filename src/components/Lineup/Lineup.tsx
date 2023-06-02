@@ -2,9 +2,9 @@ import { useMemo, useState } from "react"
 import { usePlayers } from "api/players"
 import Actions from "components/Actions"
 import Title from "components/common/Title"
-import { formatOrdinal } from "utils/format"
 import Batting from "./Batting"
 import Fielding from "./Fielding"
+import Inning from "./Inning"
 
 export interface LineupProps {
   playerIds: string[]
@@ -28,10 +28,7 @@ export default function Lineup({ playerIds, venue }: LineupProps) {
     <div className="mb-20">
       <div className="mb-4 flex items-end justify-between">
         <Title>{batting ? "Batting" : "Fielding"}</Title>
-
-        <p className="text-gray-600">
-          {top ? "Top" : "Bottom"} of the {formatOrdinal(realInning)}
-        </p>
+        <Inning inning={realInning} top={top} />
       </div>
 
       {batting ? (
