@@ -8,6 +8,8 @@ import { ActivePositions } from "components/Players/ActivePositions"
 import { DeletePlayerModal } from "components/Players/DeletePlayerModal"
 import { fieldPositionNames, fieldPositions } from "utils/positions"
 
+const MAX_POSITIONS = 5
+
 export default function Player() {
   const { id } = useParams()
   const [player, { loading }] = usePlayer(id!)
@@ -54,7 +56,7 @@ export default function Player() {
 
           <h2 className="text-lg font-bold">Add positions</h2>
           <p className="mb-4 text-sm text-gray-700">
-            Select up to 4 preferred positions
+            Select up to {MAX_POSITIONS} preferred positions
           </p>
           <ul className="space-y-2">
             {fieldPositions
@@ -66,7 +68,7 @@ export default function Player() {
                 <li key={position}>
                   <AddButton
                     aria-label={`Add ${fieldPositionNames[position]}`}
-                    disabled={selectedItems.length >= 4}
+                    disabled={selectedItems.length >= MAX_POSITIONS}
                     onClick={() => {
                       addPlayerPosition(
                         player.id,
