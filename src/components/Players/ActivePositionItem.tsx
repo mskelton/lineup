@@ -31,7 +31,7 @@ export default function ActivePositionItem({
   return (
     <div
       ref={setNodeRef}
-      className="mb-3 flex w-full cursor-grab select-none items-center justify-between gap-2 rounded-lg border border-indigo-600 bg-white px-4 py-2 text-sm font-medium"
+      className="mb-3 flex w-full items-center justify-between gap-2 rounded-lg border border-indigo-600 bg-white px-4 py-2 text-sm font-medium"
       id={value}
       style={style}
     >
@@ -39,7 +39,7 @@ export default function ActivePositionItem({
         <button
           {...attributes}
           {...listeners}
-          className="-my-3.5 -ml-4 touch-none py-3.5 pl-4"
+          className="-my-3.5 -ml-4 cursor-grab touch-none py-3.5 pl-4"
           type="button"
         >
           <Bars3Icon className="h-5 w-5" />
