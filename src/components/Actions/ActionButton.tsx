@@ -3,9 +3,9 @@ import { Button, ButtonProps } from "react-aria-components"
 import { twMerge } from "tailwind-merge"
 
 const colors = {
-  blue: "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500",
-  green: "bg-green-600 hover:bg-green-700 focus:ring-green-500",
-  red: "bg-red-600 hover:bg-red-700 focus:ring-red-500",
+  blue: "bg-blue-600 hover:bg-blue-700",
+  green: "bg-green-600 hover:bg-green-700",
+  red: "bg-red-600 hover:bg-red-700",
 }
 
 export interface ActionButtonProps extends ButtonProps {
@@ -23,7 +23,7 @@ export function ActionButton({
   return (
     <Button
       className={twMerge(
-        "flex flex-1 items-center justify-center rounded-md px-4 py-3 text-white focus:outline-none focus:ring-offset-2 focus-visible:ring-2",
+        "flex flex-1 items-center justify-center rounded-md px-4 py-2 text-sm text-white focus:outline-none",
         colors[color],
         props.isDisabled && "pointer-events-none bg-gray-400 opacity-50"
       )}
@@ -45,7 +45,7 @@ ActionButton.Container = function ActionButtonContainer({
 }: ActionButtonContainerProps) {
   return (
     <div className="mt-20">
-      <div className="fixed bottom-0 right-0 flex w-full justify-evenly gap-2 bg-slate-100 p-4 shadow-lg lg:w-[calc(100%-18rem)]">
+      <div className="fixed bottom-0 right-0 flex w-full justify-evenly gap-2 bg-slate-100 p-2 shadow-lg lg:w-[calc(100%-18rem)]">
         {children}
       </div>
     </div>
