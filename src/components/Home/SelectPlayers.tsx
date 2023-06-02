@@ -1,4 +1,3 @@
-import { Reorder } from "framer-motion"
 import { useEffect, useState } from "react"
 import { usePlayers } from "api/players"
 import { useRoster } from "api/rosters"
@@ -6,6 +5,7 @@ import { ActionButton } from "components/Actions/ActionButton"
 import AddButton from "components/common/AddButton"
 import Alert from "components/common/Alert"
 import Skeleton from "components/common/Skeleton"
+import { Sortable } from "components/common/Sortable"
 import ActivePositionItem from "components/Players/ActivePositionItem"
 import { truthy } from "utils/truthy"
 
@@ -43,28 +43,28 @@ export default function SelectPlayer({ onSelect, rosterId }: SelectPlayer) {
 
       <h2 className="font-medium">Selected Players</h2>
       {selected.length ? (
-        <Reorder.Group
-          key={selected.length}
-          axis="y"
-          className="mb-6 mt-2 space-y-3"
-          onReorder={setSelected}
-          values={selected}
-        >
-          {selected
-            .map((playerId) => active.find((p) => p.id === playerId))
-            .filter(truthy)
-            .map((player) => (
-              <ActivePositionItem
-                key={player.id}
-                onDelete={() => {
-                  setSelected((prev) => prev.filter((id) => id !== player.id))
-                }}
-                value={player.id}
-              >
-                {player.name}
-              </ActivePositionItem>
-            ))}
-        </Reorder.Group>
+        <div className="mb-6 mt-2 space-y-3">
+          <Sortable
+            key={selected.length}
+            items={selected}
+            onChange={setSelected}
+          >
+            {selected
+              .map((playerId) => active.find((p) => p.id === playerId))
+              .filter(truthy)
+              .map((player) => (
+                <ActivePositionItem
+                  key={player.id}
+                  onDelete={() => {
+                    setSelected((prev) => prev.filter((id) => id !== player.id))
+                  }}
+                  value={player.id}
+                >
+                  {player.name}
+                </ActivePositionItem>
+              ))}
+          </Sortable>
+        </div>
       ) : (
         <p className="mb-6 text-xs text-gray-600">No players selected</p>
       )}

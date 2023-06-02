@@ -1,6 +1,6 @@
-import { Reorder } from "framer-motion"
 import { useState } from "react"
 import { removePlayerPosition } from "api/players"
+import { Sortable } from "components/common/Sortable"
 import ActivePositionItem, { ActivePosition } from "./ActivePositionItem"
 
 export interface ActivePositionsProps {
@@ -18,25 +18,23 @@ export function ActivePositions({
 
   return (
     <div className="mb-8 space-y-3">
-      <Reorder.Group
-        axis="y"
-        className="mb-8 space-y-3"
-        onReorder={(newItems) => {
+      <Sortable
+        items={items}
+        onChange={(newItems) => {
           setItems(newItems)
           onReorder(newItems)
         }}
-        values={items}
       >
         {items.map((item) => (
           <ActivePositionItem
             key={item.id}
             onDelete={() => removePlayerPosition(playerId, item.id)}
-            value={item}
+            value={item.id}
           >
             {item.name}
           </ActivePositionItem>
         ))}
-      </Reorder.Group>
+      </Sortable>
     </div>
   )
 }
