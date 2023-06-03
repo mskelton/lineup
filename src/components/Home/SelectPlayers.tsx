@@ -25,7 +25,12 @@ export default function SelectPlayer({ onSelect, rosterId }: SelectPlayer) {
 
   useEffect(() => {
     if (!roster) return
-    setSelected(Object.keys(roster.players ?? {}))
+
+    setSelected(
+      Object.entries(roster.players ?? {})
+        .filter(([_, enabled]) => enabled)
+        .map(([id]) => id)
+    )
   }, [roster])
 
   return loading ? (
