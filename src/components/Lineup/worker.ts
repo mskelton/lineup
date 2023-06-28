@@ -147,8 +147,10 @@ function sortPlayers(roster: Player[]) {
  * an available player.
  */
 function benchPlayers(roster: Player[], inning: number) {
-  const totalPlayers = roster.length
-  const extra = totalPlayers - fieldPositions.length
+  const constantPlayers = roster.filter((player) => player.alwaysActive)
+  const benchablePlayers = roster.filter((player) => !player.alwaysActive)
+  const totalPlayers = benchablePlayers.length
+  const extra = totalPlayers - (fieldPositions.length - constantPlayers.length)
 
   // If we have fewer players than positions, we don't need to bench anyone.
   if (extra <= 0) {
@@ -156,7 +158,9 @@ function benchPlayers(roster: Player[], inning: number) {
   }
 
   const interval = Math.ceil(totalPlayers / extra)
-  return roster.filter((_, i) => (i - inning) % interval !== 0)
+  return benchablePlayers
+    .filter((_, i) => (i - inning) % interval !== 0)
+    .concat(constantPlayers)
 }
 
 function getPlayersByPosition(roster: Player[]) {

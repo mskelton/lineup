@@ -1,8 +1,14 @@
 import { useParams } from "react-router-dom"
-import { addPlayerPosition, setPlayerPositions, usePlayer } from "api/players"
+import {
+  addPlayerPosition,
+  setPlayerAlwaysActive,
+  setPlayerPositions,
+  usePlayer,
+} from "api/players"
 import AddButton from "components/common/AddButton"
 import NotFound from "components/common/NotFound"
 import Skeleton from "components/common/Skeleton"
+import Switch from "components/common/Switch"
 import Title from "components/common/Title"
 import { ActivePositions } from "components/Players/ActivePositions"
 import { DeletePlayerModal } from "components/Players/DeletePlayerModal"
@@ -84,6 +90,22 @@ export default function Player() {
           </ul>
 
           <div className="mt-8">
+            <h2 className="text-lg font-bold">Settings</h2>
+            <p className="mb-4 text-sm text-gray-700">
+              Additional settings for the player
+            </p>
+
+            <Switch
+              isSelected={!!player.alwaysActive}
+              label="Always active"
+              onChange={(value) => setPlayerAlwaysActive(player.id, value)}
+            />
+          </div>
+
+          <div className="mt-8">
+            <h2 className="text-lg font-bold">Danger Zone</h2>
+            <p className="mb-4 text-sm text-gray-700">Here be dragons!</p>
+
             {!loading ? <DeletePlayerModal id={player.id} /> : null}
           </div>
         </div>

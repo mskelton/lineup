@@ -12,10 +12,10 @@ export interface SwitchProps extends BaseSwitchProps {
 }
 
 export default function Switch({
-  align,
+  align = "right",
   isSelected,
   label: labelProp,
-  labelVisibility,
+  labelVisibility = "visible",
   ...props
 }: SwitchProps) {
   const id = useId()

@@ -5,6 +5,7 @@ import { generateId } from "utils/id"
 import { db } from "./firebase"
 
 export interface Player {
+  alwaysActive?: boolean
   createdAt: number
   id: string
   name: string
@@ -73,4 +74,12 @@ export async function setPlayerPositions(
   )
 
   await set(positionRef, orderedPositions)
+}
+
+export async function setPlayerAlwaysActive(
+  playerId: string,
+  alwaysActive: boolean
+) {
+  const playerRef = child(playersRef, `${playerId}/alwaysActive`)
+  await set(playerRef, alwaysActive)
 }
