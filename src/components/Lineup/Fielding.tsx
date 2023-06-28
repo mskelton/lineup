@@ -7,19 +7,26 @@ import { fieldPositionNames, fieldPositions } from "utils/positions"
 import AnalysisSummary from "./AnalysisSummary"
 import LineupItem from "./LineupItem"
 import { useLineups } from "./useLineups"
+import { Lineup } from "./worker"
 
 export interface FieldingProps {
   inning: number
   loadingPlayers: boolean
+  onLineup(lineup: Lineup | undefined): void
   roster: Player[]
 }
 
 export default function Fielding({
   inning,
   loadingPlayers,
+  onLineup,
   roster,
 }: FieldingProps) {
-  const [lineup, { loading: loadingLineups }] = useLineups(roster, inning)
+  const [lineup, { loading: loadingLineups }] = useLineups(
+    roster,
+    inning,
+    onLineup
+  )
   const loading = loadingPlayers || loadingLineups
 
   const sortedRoster = useMemo(() => {
