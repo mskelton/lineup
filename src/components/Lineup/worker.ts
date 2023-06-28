@@ -157,9 +157,13 @@ function benchPlayers(roster: Player[], inning: number) {
     return roster
   }
 
-  const interval = Math.ceil(totalPlayers / extra)
+  const interval = Math.floor(totalPlayers / extra)
+  const toBench = new Array(extra)
+    .fill(0)
+    .map((_, i) => (i * interval + (inning - 1)) % totalPlayers)
+
   return benchablePlayers
-    .filter((_, i) => (i - inning) % interval !== 0)
+    .filter((_, i) => !toBench.includes(i))
     .concat(constantPlayers)
 }
 
